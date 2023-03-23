@@ -1,25 +1,32 @@
 #include "monty.h"
-
 /**
- * add - adds the top two elements of the stack
- * @stack: pointer to the top of the stack
- * @line_number: line number of the opcode in the file
- *
- * Return: void
- */
-
-void add(stack_t **stack, unsigned int line_number)
+ * f_add - adds the top two elements of the stack.
+ * @head: stack head
+ * @counter: line_number
+ * Return: no return
+*/
+void f_add(stack_t **head, unsigned int counter)
 {
-	int sum;
+	stack_t *h;
+	int len = 0, aux;
 
-	if (*stack == NULL || (*stack)->next == NULL)
+	h = *head;
+	while (h)
 	{
-		fprintf(stderr, "L%u: can't add, stack too short", line_number);
-		free_all();
+		h = h->next;
+		len++;
+	}
+	if (len < 2)
+	{
+		fprintf(stderr, "L%d: can't add, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
-	sum = (*stack)->n + (*stack)->next->n;
-	pop(stack, line_number);
-	(*stack)->n = sum;
+	h = *head;
+	aux = h->n + h->next->n;
+	h->next->n = aux;
+	*head = h->next;
+	free(h);
 }
