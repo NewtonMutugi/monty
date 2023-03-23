@@ -3,22 +3,23 @@
 /**
  * add - adds the top two elements of the stack
  * @stack: pointer to the top of the stack
- * @line_number: line number of the opcode
+ * @line_number: line number of the opcode in the file
+ *
  * Return: void
  */
 
 void add(stack_t **stack, unsigned int line_number)
 {
-	stack_t *temp = *stack;
-	int n;
+	int sum;
 
 	if (*stack == NULL || (*stack)->next == NULL)
 	{
-		fprintf(stderr, "L%d: can't add, stack too short", line_number);
+		fprintf(stderr, "L%u: can't add, stack too short", line_number);
+		free_all();
 		exit(EXIT_FAILURE);
 	}
-	n = temp->n;
-	temp->n = temp->next->n;
-	temp->next->n = n + temp->n;
+
+	sum = (*stack)->n + (*stack)->next->n;
 	pop(stack, line_number);
+	(*stack)->n = sum;
 }

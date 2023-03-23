@@ -2,9 +2,8 @@
 
 /**
  * nop - does nothing
- * @stack: pointer to the top of the stack
+ * @stack: double pointer to the head of the stack
  * @line_number: line number of the opcode
- * Return: void
  */
 
 void nop(stack_t **stack, unsigned int line_number)
