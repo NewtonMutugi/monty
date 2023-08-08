@@ -4,11 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <ctype.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -40,33 +35,18 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/**
- * struct header_s - opcode and its function
- * @arg: the opcode
- * @file: file to be read
- * @content: content of the file
- * @line_number: line number
- */
+/* Global Variables */
+extern stack_t *stack;
+extern int line_number;
 
-typedef struct header_s
-{
-	char *arg;
-	FILE *file;
-	char *content;
-	int line_number;
-} header_t;
+/* Function Prototypes */
+char *_strtok(char *str, const char *delim);
+char *_strpbrk(char *s, const char *accept);
+char *_strdup(char *str);
+int _strcmp(char *s1, char *s2);
+void (*get_op_func(char *opcode))(stack_t **stack, unsigned int line_number);
 
-extern header_t header;
-
-extern int global_variable;
-extern int g_line_number;
-extern int g_file_number;
-extern char *g_buffer;
-
-void free_stack(stack_t **stack);
-void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
-void pint(stack_t **stack, unsigned int line_number);
 
 #endif /* MONTY_H */

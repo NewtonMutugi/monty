@@ -1,52 +1,53 @@
 #include "monty.h"
 
-/**
- * main - entry point
- * @argc: number of arguments
- * @argv: array of arguments
- * Return: 0 on success
- */
+/* Global variable to hold the stack */
+stack_t *stack = NULL;
 
+/* Main function to interpret Monty bytecode */
 int main(int argc, char *argv[])
 {
-	FILE *file;
-	char *line = NULL;
-	size_t len = 0;
-	ssize_t read;
-	stack_t *stack = NULL;
-	unsigned int line_number = 0;
-	char *opcode = NULL;
-
+	/* Check for correct number of arguments */
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
-		exit(EXIT_FAILURE);
+		return EXIT_FAILURE;
 	}
 
-	file = fopen(argv[1], "r");
-	if (file == NULL)
+	/* Open the bytecode file */
+	FILE *file = fopen(argv[1], "r");
+	if (!file)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
+		return EXIT_FAILURE;
 	}
 
-	while ((read = getline(&line, &len, file)) != -1)
+	/* Read and interpret the bytecode commands */
+	char buffer[1024];
+	while (fgets(buffer, sizeof(buffer), file))
 	{
-		line_number++;
-		opcode = strtok(line, " \n\t\r");
-		if (opcode == NULL || opcode[0] == '#')
+		/* Tokenize the buffer and identify the opcode */
+		char *opcode = strtok(buffer, " \t\n");
+		if (!opcode || opcode[0] == '#')
 			continue;
-		if (strcmp(opcode, "push") == 0)
+
+		/* Call the corresponding function based on the opcode */
+		instruction_t instructions[] = {
+		    {"push", push},
+		    {"pall", pall},
+		    /* Add more opcode-function pairs here */
+		};
+
+		for (size_t i = 0; i < sizeof(instructions) / sizeof(instructions[0]); i++)
 		{
-			push(&stack, line_number);
-		}
-		else
-		{
-			get_op_func(opcode)(&stack, line_number);
+			if (strcmp(opcode, instructions[i].opcode) == 0)
+			{
+				instructions[i].f(&stack, 0); // You'll need to pass the correct line_number here
+				break;
+			}
 		}
 	}
-	free(line);
-	free_stack(&stack);
+
+	/* Close the file and clean up */
 	fclose(file);
-	return (0);
+	return EXIT_SUCCESS;
 }
