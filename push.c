@@ -10,6 +10,7 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	/* Parse the integer argument */
 	char *token = strtok(NULL, " \t\n");
+
 	if (!token)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
@@ -20,6 +21,7 @@ void push(stack_t **stack, unsigned int line_number)
 
 	/* Create a new stack node */
 	stack_t *new_node = malloc(sizeof(stack_t));
+
 	if (!new_node)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
