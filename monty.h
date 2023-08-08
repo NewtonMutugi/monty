@@ -40,6 +40,24 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/**
+ * struct header_s - opcode and its function
+ * @arg: the opcode
+ * @file: file to be read
+ * @content: content of the file
+ * @line_number: line number
+ */
+
+typedef struct header_s
+{
+	char *arg;
+	FILE *file;
+	char *content;
+	int line_number;
+} header_t;
+
+extern header_t header;
+
 extern int global_variable;
 extern int g_line_number;
 extern int g_file_number;
