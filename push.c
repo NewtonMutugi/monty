@@ -8,19 +8,15 @@
 
 void push(stack_t **stack, unsigned int line_number)
 {
-	/* Parse the integer argument */
-	char *token = strtok(NULL, " \t\n");
+	char *token = strtok(NULL, " \t\n");	     /* Parse the integer argument */
+	stack_t *new_node = malloc(sizeof(stack_t)); /* Create a new stack node */
+	int value = atoi(token);
 
 	if (!token)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-
-	int value = atoi(token);
-
-	/* Create a new stack node */
-	stack_t *new_node = malloc(sizeof(stack_t));
 
 	if (!new_node)
 	{

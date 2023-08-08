@@ -11,20 +11,25 @@
 int main(int argc, char *argv[])
 {
 	stack_t *stack = NULL;
+	FILE *file = fopen(argv[1], "r");
+	char buffer[1024];
+	instruction_t instructions[] = {
+	    {"push", push},
+	    {"pall", pall},
+	};
+	size_t i;
 
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		return EXIT_FAILURE;
 	}
-	FILE *file = fopen(argv[1], "r");
 
 	if (!file)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		return (EXIT_FAILURE);
 	}
-	char buffer[1024];
 
 	while (fgets(buffer, sizeof(buffer), file))
 	{
@@ -33,12 +38,7 @@ int main(int argc, char *argv[])
 		if (!opcode || opcode[0] == '#')
 			continue;
 
-		instruction_t instructions[] = {
-		    {"push", push},
-		    {"pall", pall},
-		};
-
-		for (size_t i = 0; i < sizeof(instructions) / sizeof(instructions[0]); i++)
+		for (i = 0; i < sizeof(instructions) / sizeof(instructions[0]); i++)
 		{
 			if (strcmp(opcode, instructions[i].opcode) == 0)
 			{
