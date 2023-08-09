@@ -1,4 +1,5 @@
 #include "monty.h"
+
 /**
  * process_instructions - Process the instructions from the input file.
  * @file: The opened input file
@@ -36,5 +37,6 @@ void process_instructions(FILE *file)
 			}
 		}
 	}
+
 	fclose(file);
 }
