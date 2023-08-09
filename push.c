@@ -15,6 +15,7 @@ void push(stack_t **stack, unsigned int line_number)
 	if (!token)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		free(new_node);
 		exit(EXIT_FAILURE);
 	}
 

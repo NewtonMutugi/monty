@@ -14,8 +14,13 @@ int main(int argc, char *argv[])
 	FILE *file = fopen(argv[1], "r");
 	char buffer[1024];
 	instruction_t instructions[] = {
-	    {"push", push},
-	    {"pall", pall},
+		{"push", push},
+		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		{"swap", swap},
+		{"add", add},
+		{"nop", nop},
 	};
 	size_t i;
 
