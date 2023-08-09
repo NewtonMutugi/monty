@@ -40,12 +40,9 @@ extern stack_t *stack;
 extern int line_number;
 
 /* Function Prototypes */
-char *_strtok(char *str, const char *delim);
-char *_strpbrk(char *s, const char *accept);
-char *_strdup(char *str);
-int _strcmp(char *s1, char *s2);
-void (*get_op_func(char *opcode))(stack_t **stack, unsigned int line_number);
-
+void process_instructions(FILE *file);
+FILE *open_file(const char *filename);
+int validate_args(int argc, char *argv[]);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
