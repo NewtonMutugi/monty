@@ -12,7 +12,7 @@ void push(stack_t **stack, unsigned int line_number)
 	int value;
 	stack_t *new_node = malloc(sizeof(stack_t));
 
-	if (!token)
+	if (!token || !is_integer(token))
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
