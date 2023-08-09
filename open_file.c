@@ -13,7 +13,7 @@ FILE *open_file(const char *filename)
 
 	if (!file)
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", filename);
+		fprintf(stderr, "USAGE: monty file\n");
 	}
 	return (file);
 }
